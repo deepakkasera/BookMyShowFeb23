@@ -1,7 +1,12 @@
 package com.scaler.bookmyshowfeb23.models;
 
-public enum SeatType {
-    SILVER,
-    GOLD,
-    PLATINUM,
+import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+public class SeatType extends BaseModel {
+    private String name;
 }
