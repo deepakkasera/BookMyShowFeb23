@@ -4,14 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "bookings")
 public class Booking extends BaseModel{ //Ticket
     private BookingStatus bookingStatus;
 
