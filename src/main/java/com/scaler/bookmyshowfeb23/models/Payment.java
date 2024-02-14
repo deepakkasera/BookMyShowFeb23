@@ -3,9 +3,11 @@ package com.scaler.bookmyshowfeb23.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.awt.print.Book;
 import java.util.Date;
 
 @Getter
@@ -20,4 +22,7 @@ public class Payment extends BaseModel {
 
     @Enumerated(EnumType.ORDINAL)
     private PaymentStatus paymentStatus;
+
+    @ManyToOne
+    private Booking booking;
 }
