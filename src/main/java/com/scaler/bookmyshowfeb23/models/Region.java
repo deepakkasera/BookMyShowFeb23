@@ -14,3 +14,12 @@ public class Region extends BaseModel {
     private String name;
     //private List<Theatre> theatres;
 }
+
+
+/*
+
+
+  1        M
+City --- Theatre => 1:M
+  1          1
+ */
