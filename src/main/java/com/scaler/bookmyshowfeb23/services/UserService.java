@@ -2,6 +2,7 @@ package com.scaler.bookmyshowfeb23.services;
 
 import com.scaler.bookmyshowfeb23.models.User;
 import com.scaler.bookmyshowfeb23.repositories.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,22 +17,32 @@ public class UserService {
 
     public User signUp(String email, String password) {
         Optional<User> optionalUser = userRepository.findAllByEmail(email);
+        User user = null;
 
         if (optionalUser.isPresent()) {
-            //Call the Login method.
+            user = signIn(email, password);
+        } else {
+            user = new User();
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            user.setEmail(email);
+            user.setPassword(bCryptPasswordEncoder.encode(password));
+            user = userRepository.save(user);
+            //Create and register the user.
         }
-        //Create and register the user.
-
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        User savedUser = userRepository.save(user);
-
-        return savedUser;
+        return user;
     }
 
     public User signIn(String email, String password) {
         //Implement the signIn workflow;
-        return null;
+        Optional<User> optionalUser = userRepository.findAllByEmail(email);
+
+        User user = optionalUser.get();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
+            System.out.println("Sign in successful");
+        } else {
+            System.out.println("Sign in unsuccessful");
+        }
+         return user;
     }
 }
