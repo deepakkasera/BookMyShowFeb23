@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class BookingService {
     private UserRepository userRepository;
@@ -92,6 +91,10 @@ public class BookingService {
         booking.setBookingStatus(BookingStatus.PENDING);
         booking.setAmount(priceCalculatorService.calculatePrice(showSeats, show));
         Booking savedBooking = bookingRepository.save(booking);
+
+        //Payment workflow will start after this.
+        //1. If payment is success, change the booking to CONFIRMED.
+        //2. If payment fails or time out, release the seats.
         return savedBooking;
     }
 }
